@@ -27,8 +27,8 @@ const Login = () => {
         src="/images/animal_shelter.png"
         alt="logo-shelter"
       />
-      <h1 className={styles.loginTitle}>Animals Shelter</h1>
-
+      <h1 className={styles.loginTitle}>Protect me Albania</h1>
+      <h4 className={styles.loginSubTitle}>Animals Shelter Database</h4>
       <div className={styles.loginForm}>
         <Controller
           control={control}

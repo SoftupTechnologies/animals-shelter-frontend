@@ -1,0 +1,106 @@
+.menuHeader {
+  background-color: #ffffff;
+  display: flex;
+  padding: 0 2rem 0 1rem;
+  width: 100%;
+  align-items: center;
+  height: 5vh;
+}
+.menuHeaderRight {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  margin-right: 3rem;
+  :global {
+    .ant-btn {
+      border-radius: 8px;
+      background-color: #fe6557;
+      color: white;
+      font-weight: bold;
+      &:hover {
+        background-color: #fd8074;
+      }
+    }
+  }
+}
+
+.menuHeaderLeft {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logoStyle {
+  width: 60px;
+  margin-left: 1rem;
+}
+.logoTitleLeftStyle {
+  font-size: 20px;
+  color: #fe6557;
+  margin-top: 1rem;
+  justify-content: start;
+  padding-left: 1.4rem;
+}
+.logoTitleRightStyle {
+  font-size: 15px;
+  color: #687daa;
+  margin-top: 1rem;
+  justify-content: start;
+  padding-left: 0.4rem;
+}
+
+.logoutButtonStyle {
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.userNameStyle {
+  font-size: 15px;
+  margin-bottom: 0px;
+  padding: 0 4rem 0 0.5rem;
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media only screen and (min-device-width: 800px) and (max-device-width: 2400px) and (orientation: landscape) and (-webkit-min-device-pixel-ratio: 2) {
+  .menuHeader {
+    height: 8vh;
+  }
+  .logoStyle {
+    width: 50px;
+  }
+  .logoTitleStyle {
+    font-size: 25px;
+    margin-top: 0.7rem;
+  }
+  .userNameStyle {
+    font-size: 15px;
+    margin-bottom: -5px;
+    padding: 0 4rem 0 0.5rem;
+  }
+  .logoutButtonStyle {
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+@media only screen and (min-device-width: 500px) and (max-device-width: 1112px) and (orientation: portrait) and (-webkit-min-device-pixel-ratio: 2) {
+  .menuHeader {
+    height: 8vh;
+  }
+  .logoStyle {
+    width: 70px;
+  }
+  .logoTitleStyle {
+    font-size: 25px;
+    margin-top: 0.7rem;
+  }
+  .userNameStyle {
+    font-size: 15px;
+    margin-bottom: -5px;
+    padding: 0 4rem 0 0.5rem;
+  }
+  .logoutButtonStyle {
+    border-radius: 15px;
+    margin-bottom: 10px;
+  }
+}
