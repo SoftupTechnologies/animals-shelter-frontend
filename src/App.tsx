@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
+import ProtectedRoute from './components/common/protectedRoute';
 import Login from './components/LoginPage';
 import MainPage from './components/MainPage';
 import NotFound from './components/NotFound';
@@ -12,7 +13,7 @@ function App() {
         <Route path={routes.LOG_IN} element={<Login />} />
         {/* <Route path={routes.LOG_OUT} element={<LogOut />} /> */}
         <Route
-          path={routes.APP}
+          path={routes.APP_DASHBOARD}
           element={
             // <ProtectedRoute>
             <MainPage />

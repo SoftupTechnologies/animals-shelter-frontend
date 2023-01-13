@@ -7,7 +7,11 @@ import { loginTypes } from './types';
 import { loginSchema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './index.module.scss';
+import { useDispatch } from 'react-redux';
+import { login } from './auth/actions-creator';
+import { AppDispatch } from '../../app/store';
 
+const dispatch: AppDispatch = useDispatch();
 const Login = () => {
   const { control, handleSubmit } = useForm<loginTypes>({
     defaultValues: {
@@ -17,7 +21,7 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
   const onSubmit = handleSubmit((values) => {
-    console.log(values);
+    dispatch(login(values));
   });
 
   return (

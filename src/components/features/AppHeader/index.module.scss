@@ -1,7 +1,6 @@
 .menuHeader {
-  background-color: #ffffff;
+  background-color: #ffd9d9;
   display: flex;
-  padding: 0 2rem 0 1rem;
   width: 100%;
   align-items: center;
   height: 5vh;
@@ -10,7 +9,7 @@
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  margin-right: 3rem;
+  margin-right: 2rem;
   :global {
     .ant-btn {
       border-radius: 8px;
@@ -32,7 +31,7 @@
 
 .logoStyle {
   width: 60px;
-  margin-left: 1rem;
+  margin-left: 2rem;
 }
 .logoTitleLeftStyle {
   font-size: 20px;

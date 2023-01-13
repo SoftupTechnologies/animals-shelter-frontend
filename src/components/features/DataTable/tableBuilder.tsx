@@ -1,8 +1,12 @@
-import { Badge, Space, Table, Image } from 'antd';
+import { Badge, Space, Table, Image, Popconfirm } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { DataType, ExpandedDataType } from './types';
 import styles from './index.module.scss';
+
+const confirm = () => {
+  console.log('Clicked on Yes.');
+};
 
 export const columns: TableColumnsType<DataType> = [
   { title: 'Breed', dataIndex: 'breed', key: 'breed' },
@@ -35,9 +39,18 @@ export const columns: TableColumnsType<DataType> = [
         <a>
           <FaEdit className={styles.editStyle} />
         </a>
-        <a>
-          <FaTrashAlt className={styles.deleteStyle} />
-        </a>
+        <Popconfirm
+          placement="right"
+          title="Are you sure to delete this animal?"
+          onConfirm={confirm}
+          okType="danger"
+          okText="Delete"
+          cancelText="No"
+        >
+          <a>
+            <FaTrashAlt className={styles.deleteStyle} />
+          </a>
+        </Popconfirm>
       </Space>
     ),
   },
