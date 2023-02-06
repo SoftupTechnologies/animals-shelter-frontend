@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from '../components/loginPage/auth/auth-reducer';
+import authReducer from '../pages/LoginPage/auth/auth-reducer';
 
 export const store = configureStore({
   reducer: {

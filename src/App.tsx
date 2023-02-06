@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import ProtectedRoute from './components/common/ProtectedRoute/protectedRoute';
-import Login from './components/loginPage';
-import MainPage from './components/MainPage';
-import NotFound from './components/NotFound';
+import Login from './pages/LoginPage';
+import MainPage from './pages/MainPage';
+import NotFound from './pages/NotFound';
 import routes from './constants/routes';
 
 function App() {
