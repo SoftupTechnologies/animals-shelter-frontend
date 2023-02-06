@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
-import ProtectedRoute from './components/common/protectedRoute';
+import ProtectedRoute from './components/common/ProtectedRoute/protectedRoute';
 import Login from './components/LoginPage';
 import MainPage from './components/MainPage';
 import NotFound from './components/NotFound';
@@ -15,9 +15,9 @@ function App() {
         <Route
           path={routes.APP_DASHBOARD}
           element={
-            // <ProtectedRoute>
-            <MainPage />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <MainPage />
+            </ProtectedRoute>
           }
         />
         <Route path="*" element={<NotFound />} />

@@ -8,6 +8,6 @@ export const loginSchema = yup
     password: yup
       .string()
       .required('Password is required!')
-      .min(8, 'Password is too short - should be 8 chars minimum!'),
+      .min(1, 'Password is too short - should be 8 chars minimum!'),
   })
   .required();

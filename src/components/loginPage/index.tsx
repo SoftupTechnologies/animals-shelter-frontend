@@ -1,18 +1,25 @@
 import React from 'react';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { BsFillXCircleFill } from 'react-icons/bs';
-import { Button, Input } from 'antd';
+import { Button, Input, Spin } from 'antd';
 import { useForm, Controller } from 'react-hook-form';
 import { loginTypes } from './types';
 import { loginSchema } from './validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import styles from './index.module.scss';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from './auth/actions-creator';
-import { AppDispatch } from '../../app/store';
+import { AppDispatch, RootState } from '../../app/store';
+import { useNavigate } from 'react-router-dom';
 
-const dispatch: AppDispatch = useDispatch();
 const Login = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+  const isLoading = useSelector((state: RootState) => {
+    state;
+  });
+  console.log('isloading expression', isLoading);
+
   const { control, handleSubmit } = useForm<loginTypes>({
     defaultValues: {
       email: '',
@@ -21,9 +28,16 @@ const Login = () => {
     resolver: yupResolver(loginSchema),
   });
   const onSubmit = handleSubmit((values) => {
-    dispatch(login(values));
+    dispatch(login(values, navigate));
   });
 
+  // if (isLoading) {
+  //   return (
+  //     <Spin tip="Loading" size="large">
+  //       <div className="content" />
+  //     </Spin>
+  //   );
+  // }
   return (
     <div className={styles.loginWrapper}>
       <img
