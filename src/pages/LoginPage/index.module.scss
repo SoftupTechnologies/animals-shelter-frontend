@@ -1,0 +1,42 @@
+.loginWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+
+  .loginLogo {
+    max-width: 100px;
+  }
+  .loginTitle {
+    color: #687daa;
+    font-size: 30px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .loginSubTitle {
+    margin-top: -10px;
+    color: #fe6557;
+  }
+
+  .loginForm {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    gap: 20px;
+  }
+
+  .loginFormButton {
+    width: 300px;
+    background-color: #687daa;
+    color: white;
+    font-weight: bold;
+    &:hover {
+      background-color: #7888af;
+    }
+  }
+  .errorStyle {
+    color: #fe6557;
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
