@@ -1,7 +1,8 @@
 .mainPageWrapper {
   display: flex;
   flex-direction: column;
-  height: 87vh;
+  height: 100vh;
+  max-height: 80vh;
 
   :global {
     .ant-table-row-expand-icon {
@@ -20,6 +21,12 @@
       &:hover {
         background-color: #7888af;
       }
+    }
+    .ant-pagination .ant-pagination-item-active {
+      border-color: #fe6557;
+    }
+    .ant-pagination .ant-pagination-item-active a {
+      color: #7888af;
     }
   }
 

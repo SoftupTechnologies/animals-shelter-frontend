@@ -14,7 +14,7 @@ const NotFound = (): ReactElement => {
       />
       <h1 className={styles.notFoundTitle}>I'm lost! Can't find the page.</h1>
       <Button type="primary" size="large" className={styles.notFoundButton}>
-        <Link to={routes.APP} className={styles.notFoundButtonLink}>
+        <Link to={routes.APP_DASHBOARD} className={styles.notFoundButtonLink}>
           Go to main page
         </Link>
       </Button>

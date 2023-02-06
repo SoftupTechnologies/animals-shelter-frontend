@@ -19,3 +19,7 @@ export interface ExpandedDataType {
   death_cause: string;
   images: string;
 }
+
+export type newDataPropsType = {
+  showDataModal: (a: boolean) => void;
+};

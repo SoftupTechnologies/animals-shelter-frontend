@@ -1,8 +1,15 @@
 import React from 'react';
 import { Button } from 'antd';
 import styles from './index.module.scss';
+import { useNavigate } from 'react-router-dom';
+import routes from '../../../constants/routes';
 
 const AppHeader: React.FC = () => {
+  const navigate = useNavigate();
+  const onLogout = () => {
+    localStorage.removeItem('token');
+    navigate(routes.LOG_IN);
+  };
   return (
     <div className={styles.menuHeader}>
       <img
@@ -22,7 +29,7 @@ const AppHeader: React.FC = () => {
         <Button
           type="primary"
           className={styles.logoutButtonStyle}
-          //   onClick={() => navigate('/logout')}
+          onClick={() => onLogout()}
         >
           Logout
         </Button>

@@ -4,6 +4,6 @@ export type loginTypes = {
 };
 
 export type User = {
-  name: string;
-  email: string;
+  error: boolean;
+  token: string;
 };

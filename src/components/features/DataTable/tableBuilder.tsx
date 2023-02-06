@@ -121,7 +121,7 @@ export const expandedRowRender = () => {
     },
   ];
   const extendedData = [];
-  for (let i = 0; i < 3; ++i) {
+  for (let i = 0; i < 1; ++i) {
     extendedData.push({
       key: i.toString(),
       chip_number: '111',

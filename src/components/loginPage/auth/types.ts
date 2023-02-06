@@ -12,7 +12,6 @@ export type Credentials = {
 };
 
 export type LoginType = {
-  email: string;
-  name: string;
+  error: boolean;
   token: string;
 };
