@@ -15,10 +15,6 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoading = useSelector((state: RootState) => {
-    state;
-  });
-  console.log('isloading expression', isLoading);
 
   const { control, handleSubmit } = useForm<loginTypes>({
     defaultValues: {

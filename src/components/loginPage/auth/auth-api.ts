@@ -15,7 +15,6 @@ export const loginUser = async (
       url,
       data: credentials,
     });
-    console.log(response);
 
     return response.data;
   } catch (error) {
