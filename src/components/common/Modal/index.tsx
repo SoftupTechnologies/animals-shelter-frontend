@@ -5,7 +5,7 @@ import styles from './index.module.scss';
 type CustomModalProps = {
   wrapClassName?: string;
   title?: string;
-  visible: boolean;
+  open: boolean;
   maskClosable?: boolean;
   destroyOnClose?: boolean;
   onCancel?: () => void;
@@ -20,7 +20,7 @@ const CustomModal = (props: CustomModalProps) => {
   const commonProps = {
     wrapClassName: props.wrapClassName,
     title: props.title,
-    visible: props.visible,
+    open: props.open,
     maskClosable: props.maskClosable,
     destroyOnClose: props.destroyOnClose,
     onCancel: props.onCancel,

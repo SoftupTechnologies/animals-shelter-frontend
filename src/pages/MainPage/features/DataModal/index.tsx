@@ -445,7 +445,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
           </Row>
         </div>
       }
-      visible
+      open
     />
   );
 };

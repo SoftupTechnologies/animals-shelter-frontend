@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
-import routes from '../../constants/routes';
+import { routes } from '../../constants/routes';
 import styles from './index.module.scss';
 
 const NotFound = (): ReactElement => {

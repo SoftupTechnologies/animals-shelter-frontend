@@ -3,6 +3,7 @@ import type { TableColumnsType } from 'antd';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 import { DataType, ExpandedDataType } from './types';
 import styles from './index.module.scss';
+import { Animal } from '../../core/types';
 
 const confirm = () => {
   console.log('Clicked on Yes.');
@@ -56,21 +57,24 @@ export const columns: TableColumnsType<DataType> = [
   },
 ];
 
-export const primaryData: DataType[] = [];
-for (let i = 0; i < 3; ++i) {
-  primaryData.push({
-    key: i.toString(),
-    breed: 'Pitbull',
-    origin: 'Abandoned',
-    gender: 'Female',
-    age: 5,
-    chipped: 'Yes',
-    inShelter: 'No',
-    isAlive: 'Alive',
+export const getPrimaryData = (animals: Animal[]) => {
+  const primaryData: DataType[] = animals.map((animal) => {
+    return {
+      key: animal.id,
+      breed: 'GIMI',
+      origin: animal.origin,
+      gender: animal.gender,
+      age: animal.age,
+      chipped: 'GIMI',
+      inShelter: 'GIMI',
+      isAlive: 'GIMI',
+    };
   });
-}
 
-export const expandedRowRender = () => {
+  return primaryData;
+};
+
+export const expandedRowRender = (animals: Animal[]) => {
   const columns: TableColumnsType<ExpandedDataType> = [
     { title: 'Chip Number', dataIndex: 'chip_number', key: 'chip_number' },
     {
@@ -120,19 +124,19 @@ export const expandedRowRender = () => {
       ),
     },
   ];
-  const extendedData = [];
-  for (let i = 0; i < 1; ++i) {
-    extendedData.push({
-      key: i.toString(),
-      chip_number: '111',
-      parvo_vaccine: '2015-09-12T14',
-      chip_date: '2015-09-12T14',
-      chip_position: 'left',
-      death_date: '2015-09-12T14',
-      death_cause: 'we dont know ',
-      images: ' ',
-    });
-  }
+  const extendedData = animals.map((animal) => {
+    return {
+      key: animal.id,
+      chip_number: 'GIMI',
+      parvo_vaccine: 'GIMI',
+      chip_date: animal.chip_date,
+      chip_position: animal.chip_position,
+      death_date: 'GIMI',
+      death_cause: 'GIMI',
+      images: 'GIMI',
+    };
+  });
+
   return (
     <Table columns={columns} dataSource={extendedData} pagination={false} />
   );
