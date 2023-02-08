@@ -1,8 +1,8 @@
 import { NavigateFunction } from 'react-router-dom';
 import { AppDispatch } from '../../../app/store';
+import { routes } from '../../../constants/routes';
 import { loginUser } from './auth-api';
 import { hasError, isLoading, addUser } from './auth-reducer';
-import routes from '../../../constants/routes';
 import { Credentials } from './types';
 
 export const login = (credentials: Credentials, navigate: NavigateFunction) => {

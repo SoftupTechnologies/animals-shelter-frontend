@@ -4,9 +4,10 @@ export interface DataType {
   origin: string;
   gender: string;
   age: number;
-  chipped: string;
-  inShelter: string;
-  isAlive: string;
+  chipped: JSX.Element;
+  in_shelter: JSX.Element;
+  isAlive: JSX.Element;
+  action: JSX.Element;
 }
 
 export interface ExpandedDataType {
@@ -17,7 +18,7 @@ export interface ExpandedDataType {
   chip_position: string;
   death_date: string;
   death_cause: string;
-  images: string;
+  images: JSX.Element;
 }
 
 export type newDataPropsType = {

@@ -12,9 +12,9 @@ import {
   UploadProps,
 } from 'antd';
 import { ReactElement, useState } from 'react';
-import { DataPropsType, newDataTypes } from './types';
+import { DataPropsType } from './types';
 import styles from './index.module.scss';
-import CustomModal from '../../common/Modal';
+import CustomModal from '../../../../components/common/Modal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { newDataSchema } from './validation';
@@ -22,26 +22,51 @@ import { Form } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import Dragger from 'antd/es/upload/Dragger';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../../../app/store';
+import { deselectAnimal } from '../../core/animal-reducer';
+import { uploadAnimalImage } from '../../core/animal-api';
+import { addAnAnimal, udpateAnAnimal } from '../../core/action-creator';
+import moment from 'moment';
+import _ from 'lodash';
+import { AnimalBody } from '../../core/types';
 
 const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
+  const dispatch = useDispatch<AppDispatch>();
+  const selectedAnimal = useSelector(
+    (state: RootState) => state.animals.selectedAnimal,
+  );
+  const [images, setImages] = useState<string[]>([]);
+
   const handleOnCancel = () => {
+    dispatch(deselectAnimal());
     showDataModal(false);
   };
 
   const props: UploadProps = {
     name: 'file',
     multiple: true,
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info) {
       const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
+      if (status === 'uploading') {
+        info.file.status = 'done';
       }
       if (status === 'done') {
         message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === 'error') {
+      }
+      if (status === 'error') {
+        console.log('error', info.file.error);
         message.error(`${info.file.name} file upload failed.`);
       }
+    },
+    customRequest: (options: any) => {
+      const data = new FormData();
+      data.append('image', options.file);
+      uploadAnimalImage(data).then((res) => {
+        setImages((prevState) => {
+          return [...prevState, res.Data];
+        });
+      });
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files);
@@ -50,40 +75,67 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
 
   const [loading, setLoading] = useState(false);
 
-  const { control, handleSubmit } = useForm<newDataTypes>({
+  const { control, handleSubmit, reset } = useForm<AnimalBody>({
     defaultValues: {
-      origin: '',
-      gender: '',
-      age: 0,
-      chipped: false,
-      chip_number: '',
-      parvo_vaccine: '',
-      chip_date: '',
-      chip_position: '',
-      inShelter: false,
-      breed: '',
-      is_alive: false,
-      death_date: '',
-      death_cause: '',
-      images: [''],
+      origin: selectedAnimal?.origin || '',
+      gender: selectedAnimal?.gender || '',
+      age: selectedAnimal?.age || 0,
+      chipped: selectedAnimal?.chipped || false,
+      chip_number: selectedAnimal?.chip_number || '',
+      parvo_vaccine: selectedAnimal?.parvo_vaccine || '',
+      chip_date: selectedAnimal?.chip_date || '',
+      chip_position: selectedAnimal?.chip_position || '',
+      in_shelter: selectedAnimal?.in_shelter || false,
+      breed: selectedAnimal?.breed || '',
+      is_alive: selectedAnimal?.is_alive || false,
+      death_date: selectedAnimal?.death_date || '',
+      death_cause: selectedAnimal?.death_cause || '',
+      images: selectedAnimal?.images || [],
     },
     resolver: yupResolver(newDataSchema),
   });
   const onSubmit = handleSubmit((values) => {
     setLoading(true);
-    const chipDateFormatted = dayjs(values.chip_date).format('DD/MM/YYYY');
-    const chipPositionFormatted = dayjs(values.chip_position).format(
-      'DD/MM/YYYY',
-    );
-    const parvoVaccineFormatted = dayjs(values.parvo_vaccine).format(
-      'DD/MM/YYYY',
-    );
-    console.log('Form values', {
-      ...values,
-      chip_date: chipDateFormatted,
-      chip_position: chipPositionFormatted,
-      parvo_vaccine: parvoVaccineFormatted,
-    });
+    const animalBody: any = {
+      origin: values.origin,
+      gender: values.gender,
+      age: values.age,
+      breed: values.breed,
+      chipped: values.chipped,
+      in_shelter: values.in_shelter,
+      is_alive: values.is_alive,
+    };
+    if (values.chip_number) {
+      animalBody.chip_number = values.chip_number;
+    }
+    if (values.parvo_vaccine) {
+      animalBody.parvo_vaccine = moment(values.parvo_vaccine).format();
+    }
+    if (values.chip_date) {
+      animalBody.chip_date = moment(values.chip_date).format();
+    }
+    if (values.chip_position) {
+      animalBody.chip_position = values.chip_position;
+    }
+    if (values.death_date) {
+      animalBody.death_date = moment(values.death_date).format();
+    }
+    if (values.death_cause) {
+      animalBody.death_cause = values.death_cause;
+    }
+    if (images.length) {
+      animalBody.images = images;
+    }
+
+    if (selectedAnimal) {
+      const animalToBeUpdated: any = { ...selectedAnimal, ...values };
+
+      dispatch(udpateAnAnimal(animalToBeUpdated, selectedAnimal.id));
+    } else {
+      dispatch(addAnAnimal(animalBody));
+    }
+    showDataModal(false);
+    reset();
     setLoading(false);
   });
 
@@ -211,6 +263,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         name={name}
                         placeholder="5"
                         size="middle"
+                        min={0}
                       />
                     </Form.Item>
                     <span className={styles.errorStyle}>{error?.message}</span>
@@ -222,13 +275,17 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="chipped"
-                render={({ field: { onChange }, fieldState: { error } }) => (
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
                   <span>
                     <Form.Item
                       label="Chipped"
                       tooltip="If animal isn't chipped, don't fill the 'Chip Details' fields"
                     >
                       <Switch
+                        checked={value}
                         onChange={onChange}
                         checkedChildren="Yes"
                         unCheckedChildren="No"
@@ -242,11 +299,15 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
             <Col span={4}>
               <Controller
                 control={control}
-                name="inShelter"
-                render={({ field: { onChange }, fieldState: { error } }) => (
+                name="in_shelter"
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
                   <span>
                     <Form.Item label="In Shelter">
                       <Switch
+                        checked={value}
                         onChange={onChange}
                         checkedChildren="Yes"
                         unCheckedChildren="No"
@@ -261,13 +322,17 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="is_alive"
-                render={({ field: { onChange }, fieldState: { error } }) => (
+                render={({
+                  field: { onChange, value },
+                  fieldState: { error },
+                }) => (
                   <span>
                     <Form.Item
                       label="Is Alive"
                       tooltip="If animal isn't alive, don't fill the 'Death Details' fields"
                     >
                       <Switch
+                        checked={value}
                         onChange={onChange}
                         checkedChildren="Yes"
                         unCheckedChildren="No"
@@ -318,10 +383,10 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   <span>
                     <Form.Item label="Chip Position">
                       <Radio.Group value={value}>
-                        <Radio onChange={onChange} value={'Left'}>
+                        <Radio onChange={onChange} value={'left'}>
                           Left
                         </Radio>
-                        <Radio onChange={onChange} value={'Right'}>
+                        <Radio onChange={onChange} value={'right'}>
                           Right
                         </Radio>
                       </Radio.Group>
@@ -335,14 +400,18 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="chip_date"
-                render={({ field: { onChange, onBlur, name } }) => (
+                render={({ field: { onChange, onBlur, name, value } }) => (
                   <span>
                     <Form.Item label="Chip Date">
                       <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
                         onChange={onChange}
                         onBlur={onBlur}
                         name={name}
-                        placeholder="2015-09-12"
                         size="middle"
                       />
                     </Form.Item>
@@ -355,14 +424,18 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="parvo_vaccine"
-                render={({ field: { onChange, onBlur, name } }) => (
+                render={({ field: { onChange, onBlur, name, value } }) => (
                   <span>
                     <Form.Item label="Parvo Vaccine">
                       <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
                         onChange={onChange}
                         onBlur={onBlur}
                         name={name}
-                        placeholder="2015-09-12"
                         size="middle"
                       />
                     </Form.Item>
@@ -378,14 +451,18 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="death_date"
-                render={({ field: { onChange, onBlur, name } }) => (
+                render={({ field: { onChange, onBlur, name, value } }) => (
                   <span>
                     <Form.Item label="Death Date">
                       <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
                         onChange={onChange}
                         onBlur={onBlur}
                         name={name}
-                        placeholder="2015-09-12"
                         size="middle"
                       />
                     </Form.Item>
@@ -424,8 +501,8 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 render={({ field: { onChange } }) => (
                   <span>
                     <Dragger
-                      onChange={onChange}
                       accept=".jpg,.jpeg,.png"
+                      onChange={onChange}
                       {...props}
                     >
                       <p className="ant-upload-drag-icon">
@@ -435,7 +512,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         Click or drag image to this area to upload
                       </p>
                       <p className="ant-upload-hint">
-                        Image upload limit is 5 images! Format: .jpg,.jpeg,.png
+                        Image upload limit is 3 images! Format: .jpg,.jpeg,.png
                       </p>
                     </Dragger>
                   </span>
@@ -445,7 +522,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
           </Row>
         </div>
       }
-      visible
+      open
     />
   );
 };

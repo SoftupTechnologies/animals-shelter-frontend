@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from 'antd';
 import styles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
-import routes from '../../../constants/routes';
+import { routes } from '../../../../constants/routes';
 
 const AppHeader: React.FC = () => {
   const navigate = useNavigate();
