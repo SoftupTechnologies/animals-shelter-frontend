@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Animal, AnimalState, AnimalUpdateBodyRedux } from './types';
+import { Animal, AnimalState } from './types';
 
 const initialState: AnimalState = {
   animals: [],
+  selectedAnimal: undefined,
   isLoading: false,
   error: undefined,
 };
@@ -18,18 +19,29 @@ export const animalSlice = createSlice({
       state.error = action.payload;
     },
     addTheAnimal: (state, action: PayloadAction<Animal>) => {
-      state.animals.push(action.payload);
+      state.animals = [action.payload, ...state.animals];
     },
     getTheAnimals: (state, action: PayloadAction<Animal[]>) => {
       state.animals = action.payload;
     },
     updateTheAnimal: (state, action: PayloadAction<Animal>) => {
-      state.animals.map((animal) => {
+      state.animals = state.animals.map((animal) => {
         if (animal.id === action.payload.id) {
           animal = action.payload;
         }
         return animal;
       });
+    },
+    deleteTheAnimal: (state, action: PayloadAction<number>) => {
+      state.animals = state.animals.filter(
+        (animal) => animal.id !== action.payload,
+      );
+    },
+    selectAnimal: (state, action: PayloadAction<Animal>) => {
+      state.selectedAnimal = action.payload;
+    },
+    deselectAnimal: (state) => {
+      state.selectedAnimal = undefined;
     },
   },
 });
@@ -40,6 +52,9 @@ export const {
   addTheAnimal,
   getTheAnimals,
   updateTheAnimal,
+  deleteTheAnimal,
+  selectAnimal,
+  deselectAnimal,
 } = animalSlice.actions;
 
 export default animalSlice.reducer;

@@ -1,15 +1,32 @@
 import { Badge, Space, Table, Image, Popconfirm } from 'antd';
 import type { TableColumnsType } from 'antd';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
+import moment from 'moment';
 import { DataType, ExpandedDataType } from './types';
 import styles from './index.module.scss';
-import { Animal } from '../../core/types';
+import { Animal, AnimalState } from '../../core/types';
+import { AnyAction, Dispatch, ThunkDispatch } from '@reduxjs/toolkit';
+import { AuthState } from '../../../LoginPage/auth/types';
+import { selectAnimal } from '../../core/animal-reducer';
+import { deleteAnAnimal } from '../../core/action-creator';
 
-const confirm = () => {
-  console.log('Clicked on Yes.');
+const onEdit = (
+  showDataModal: (a: boolean) => void,
+  dispatch: ThunkDispatch<
+    {
+      auth: AuthState;
+      animals: AnimalState;
+    },
+    undefined,
+    AnyAction
+  > &
+    Dispatch<AnyAction>,
+  animal: Animal,
+) => {
+  dispatch(selectAnimal(animal));
+  showDataModal(true);
 };
-
-export const columns: TableColumnsType<DataType> = [
+export const columns = [
   { title: 'Breed', dataIndex: 'breed', key: 'breed' },
   { title: 'Origin', dataIndex: 'origin', key: 'origin' },
   { title: 'Gender', dataIndex: 'gender', key: 'gender' },
@@ -18,63 +35,91 @@ export const columns: TableColumnsType<DataType> = [
     title: 'Chipped',
     dataIndex: 'chipped',
     key: 'chipped',
-    render: () => <Badge status="error" text="No" />,
   },
   {
     title: 'In Shelter',
-    dataIndex: 'inShelter',
-    key: 'inShelter',
-    render: () => <Badge status="error" text="No" />,
+    dataIndex: 'in_shelter',
+    key: 'in_shelter',
   },
   {
     title: 'Is Alive',
     dataIndex: 'isAlive',
     key: 'isAlive',
-    render: () => <Badge status="success" text="Alive" />,
   },
   {
     title: 'Action',
+    dataIndex: 'action',
     key: 'operation',
-    render: () => (
-      <Space size="middle">
-        <a>
-          <FaEdit className={styles.editStyle} />
-        </a>
-        <Popconfirm
-          placement="right"
-          title="Are you sure to delete this animal?"
-          onConfirm={confirm}
-          okType="danger"
-          okText="Delete"
-          cancelText="No"
-        >
-          <a>
-            <FaTrashAlt className={styles.deleteStyle} />
-          </a>
-        </Popconfirm>
-      </Space>
-    ),
   },
 ];
 
-export const getPrimaryData = (animals: Animal[]) => {
+export const getPrimaryData = (
+  animals: Animal[],
+  showDataModal: (a: boolean) => void,
+  dispatch: ThunkDispatch<
+    {
+      auth: AuthState;
+      animals: AnimalState;
+    },
+    undefined,
+    AnyAction
+  > &
+    Dispatch<AnyAction>,
+) => {
   const primaryData: DataType[] = animals.map((animal) => {
     return {
       key: animal.id,
-      breed: 'GIMI',
+      breed: animal.breed,
       origin: animal.origin,
       gender: animal.gender,
       age: animal.age,
-      chipped: 'GIMI',
-      inShelter: 'GIMI',
-      isAlive: 'GIMI',
+      chipped: (
+        <Badge
+          status={animal.chipped ? 'success' : 'error'}
+          text={animal.chipped ? 'Yes' : 'No'}
+        />
+      ),
+      in_shelter: (
+        <Badge
+          status={animal.in_shelter ? 'success' : 'error'}
+          text={animal.in_shelter ? 'Yes' : 'No'}
+        />
+      ),
+      isAlive: (
+        <Badge
+          status={animal.is_alive ? 'success' : 'error'}
+          text={animal.is_alive ? 'Yes' : 'No'}
+        />
+      ),
+      action: (
+        <Space size="middle">
+          <a>
+            <FaEdit
+              className={styles.editStyle}
+              onClick={() => onEdit(showDataModal, dispatch, animal)}
+            />
+          </a>
+          <Popconfirm
+            placement="right"
+            title="Are you sure to delete this animal?"
+            onConfirm={() => dispatch(deleteAnAnimal(animal.id))}
+            okType="danger"
+            okText="Delete"
+            cancelText="No"
+          >
+            <a>
+              <FaTrashAlt className={styles.deleteStyle} />
+            </a>
+          </Popconfirm>
+        </Space>
+      ),
     };
   });
 
   return primaryData;
 };
 
-export const expandedRowRender = (animals: Animal[]) => {
+export const expandedRowRender = (animals: Animal[], record: any) => {
   const columns: TableColumnsType<ExpandedDataType> = [
     { title: 'Chip Number', dataIndex: 'chip_number', key: 'chip_number' },
     {
@@ -106,36 +151,38 @@ export const expandedRowRender = (animals: Animal[]) => {
       title: 'Images',
       dataIndex: 'images',
       key: 'images',
-      render: () => (
-        <Image.PreviewGroup>
-          <Image
-            width={50}
-            src="https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*"
-          />
-          <Image
-            width={50}
-            src="https://www.thesprucepets.com/thmb/VM19tEJa_foFAkzEkIy8tj7EBeo=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/top-friendliest-dog-breeds-4691511_hero-5c6a918dcf56409c888d78b0fac82d18.jpg"
-          />
-          <Image
-            width={50}
-            src="https://upload.wikimedia.org/wikipedia/commons/9/90/Labrador_Retriever_portrait.jpg"
-          />
-        </Image.PreviewGroup>
-      ),
     },
   ];
-  const extendedData = animals.map((animal) => {
-    return {
-      key: animal.id,
-      chip_number: 'GIMI',
-      parvo_vaccine: 'GIMI',
-      chip_date: animal.chip_date,
-      chip_position: animal.chip_position,
-      death_date: 'GIMI',
-      death_cause: 'GIMI',
-      images: 'GIMI',
-    };
-  });
+  const extendedData = animals
+    .filter((a) => a.id === record.key)
+    .map((animal) => {
+      return {
+        key: animal.id,
+        chip_number: animal.chip_number ? animal.chip_number : 'No chip number',
+        parvo_vaccine: animal.parvo_vaccine
+          ? moment(animal.parvo_vaccine).format('ll')
+          : 'No parvo vaccine',
+        chip_date: animal.chip_date
+          ? moment(animal.chip_date).format('ll')
+          : 'No chip date',
+        chip_position: animal.chip_position
+          ? animal.chip_position
+          : 'No position',
+        death_date: animal.death_date
+          ? moment(animal.death_date).format('ll')
+          : 'No date',
+        death_cause: animal.death_cause ? animal.death_cause : 'No death cause',
+        images: animal.images ? (
+          <Image.PreviewGroup>
+            {animal.images.map((image) => (
+              <Image width={50} src={image} />
+            ))}
+          </Image.PreviewGroup>
+        ) : (
+          <p>No images</p>
+        ),
+      };
+    });
 
   return (
     <Table columns={columns} dataSource={extendedData} pagination={false} />

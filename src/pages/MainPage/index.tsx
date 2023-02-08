@@ -15,7 +15,7 @@ const MainPage = () => {
       <div className={styles.mainContainer}>
         <DataTable showDataModal={showDataModal} />
       </div>
-      {isDataModalShown ? <DataModal showDataModal={showDataModal} /> : null}
+      {isDataModalShown && <DataModal showDataModal={showDataModal} />}
       <Footer style={{ textAlign: 'center' }}>
         {`Protect me Albania ©${new Date().getFullYear()} - Made with ${redHeartEmoji} by Softup Technologies`}
       </Footer>

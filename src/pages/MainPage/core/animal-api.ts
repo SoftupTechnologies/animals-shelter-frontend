@@ -8,6 +8,7 @@ import {
 } from './types';
 
 const backendUrl = 'http://167.99.252.248:5000';
+const token = localStorage.getItem('token');
 
 export const getAnimals = async (
   page: number,
@@ -19,6 +20,9 @@ export const getAnimals = async (
     const response = await Axios({
       method: 'GET',
       url,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     });
 
     return response.data;
@@ -27,13 +31,18 @@ export const getAnimals = async (
   }
 };
 
-export const postAnimal = async (animal: AnimalBody): Promise<Animal> => {
+export const postAnimal = async (
+  animal: AnimalBody,
+): Promise<{ animal: Animal }> => {
   try {
-    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMALS}`;
+    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMAL}`;
 
     const response = await Axios({
       method: 'PUT',
       url,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
       data: animal,
     });
 
@@ -48,11 +57,14 @@ export const updateAnimal = async (
   animalId: number,
 ): Promise<UpdateAnimalResponseType> => {
   try {
-    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMALS}?id=${animalId}`;
+    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMAL}?id=${animalId}`;
 
     const response = await Axios({
       method: 'POST',
       url,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
       data: animal,
     });
 
@@ -64,10 +76,31 @@ export const updateAnimal = async (
 
 export const deleteAnimal = async (animalId: any) => {
   try {
-    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMALS}?id=${animalId}`;
+    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMAL}?id=${animalId}`;
     const response = await Axios({
       method: 'DELETE',
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
       url,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const uploadAnimalImage = async (file: FormData) => {
+  try {
+    const url = `${backendUrl}${routes.API.BASE}${routes.API.ANIMAL_IMAGE_UPLOAD}`;
+    const response = await Axios({
+      method: 'POST',
+      url,
+      data: file,
+      headers: {
+        Authorization: 'Bearer ' + token,
+      },
     });
 
     return response.data;
