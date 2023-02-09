@@ -9,9 +9,10 @@ import { newDataPropsType } from './types';
 
 const DataTable = ({ showDataModal }: newDataPropsType): ReactElement => {
   const dispatch = useDispatch<AppDispatch>();
+  // const [pageNumber, setPageNumber] = useState(1);
+  const pageSize = 9999;
   useEffect(() => {
-    //to be handled better with pagination element since values below are mock
-    dispatch(getAllAnimals(1, 10));
+    dispatch(getAllAnimals(1, pageSize));
   }, [dispatch]);
   const animals = useSelector((state: RootState) => state.animals.animals);
   const handleOnCreateData = () => {
@@ -31,10 +32,13 @@ const DataTable = ({ showDataModal }: newDataPropsType): ReactElement => {
         className={styles.mainTable}
         columns={columns}
         dataSource={primaryData}
+        scroll={{ y: 420 }}
         expandable={{
           expandedRowRender: (record) => expandedRowRender(animals, record),
         }}
-        pagination={{ pageSize: 10 }}
+        // pagination={{
+        //   pageSize,
+        // }}
       />
     </div>
   );

@@ -9,6 +9,7 @@ import {
   Radio,
   Row,
   Switch,
+  Tooltip,
   UploadProps,
 } from 'antd';
 import { ReactElement, useState } from 'react';
@@ -30,6 +31,7 @@ import { addAnAnimal, udpateAnAnimal } from '../../core/action-creator';
 import moment from 'moment';
 import _ from 'lodash';
 import { AnimalBody } from '../../core/types';
+import { BsFillXCircleFill } from 'react-icons/bs';
 
 const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
   const dispatch = useDispatch<AppDispatch>();
@@ -75,7 +77,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
 
   const [loading, setLoading] = useState(false);
 
-  const { control, handleSubmit, reset } = useForm<AnimalBody>({
+  const { control, handleSubmit, reset, watch } = useForm<AnimalBody>({
     defaultValues: {
       origin: selectedAnimal?.origin || '',
       gender: selectedAnimal?.gender || '',
@@ -185,11 +187,21 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         value={value}
                         status={error ? 'error' : ''}
                         name={name}
+                        suffix={
+                          error ? (
+                            <Tooltip title={error?.message} color={'red'}>
+                              <BsFillXCircleFill
+                                className={styles.errorStyle}
+                              />
+                            </Tooltip>
+                          ) : (
+                            ''
+                          )
+                        }
                         placeholder="Golden"
                         size="middle"
                       />
                     </Form.Item>
-                    <span className={styles.errorStyle}>{error?.message}</span>
                   </span>
                 )}
               />
@@ -210,11 +222,21 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         value={value}
                         status={error ? 'error' : ''}
                         name={name}
+                        suffix={
+                          error ? (
+                            <Tooltip title={error?.message} color={'red'}>
+                              <BsFillXCircleFill
+                                className={styles.errorStyle}
+                              />
+                            </Tooltip>
+                          ) : (
+                            ''
+                          )
+                        }
                         placeholder="Abandoned"
                         size="middle"
                       />
                     </Form.Item>
-                    <span className={styles.errorStyle}>{error?.message}</span>
                   </span>
                 )}
               />
@@ -282,7 +304,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   <span>
                     <Form.Item
                       label="Chipped"
-                      tooltip="If animal isn't chipped, don't fill the 'Chip Details' fields"
+                      tooltip="If animal isn't chipped, you can't fill 'Chip Details' fields."
                     >
                       <Switch
                         checked={value}
@@ -329,7 +351,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   <span>
                     <Form.Item
                       label="Is Alive"
-                      tooltip="If animal isn't alive, don't fill the 'Death Details' fields"
+                      tooltip="If animal is alive, you can't fill 'Death Details' fields"
                     >
                       <Switch
                         checked={value}
@@ -356,11 +378,15 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   fieldState: { error },
                 }) => (
                   <span>
-                    <Form.Item label="Chip Number">
+                    <Form.Item
+                      label="Chip Number"
+                      tooltip="If you leave 'Chip Number' field blank, the Chip Number will be auto generated."
+                    >
                       <Input
                         onChange={onChange}
                         onBlur={onBlur}
                         value={value}
+                        disabled={!watch('chipped')}
                         status={error ? 'error' : ''}
                         name={name}
                         placeholder="1234"
@@ -382,7 +408,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 }) => (
                   <span>
                     <Form.Item label="Chip Position">
-                      <Radio.Group value={value}>
+                      <Radio.Group value={value} disabled={!watch('chipped')}>
                         <Radio onChange={onChange} value={'left'}>
                           Left
                         </Radio>
@@ -391,7 +417,9 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         </Radio>
                       </Radio.Group>
                     </Form.Item>
-                    <span className={styles.errorStyle}>{error?.message}</span>
+                    <span className={styles.errorStyleSpan}>
+                      {error?.message}
+                    </span>
                   </span>
                 )}
               />
@@ -411,6 +439,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                           : null)}
                         onChange={onChange}
                         onBlur={onBlur}
+                        disabled={!watch('chipped')}
                         name={name}
                         size="middle"
                       />
@@ -451,9 +480,12 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               <Controller
                 control={control}
                 name="death_date"
-                render={({ field: { onChange, onBlur, name, value } }) => (
+                render={({
+                  field: { onChange, onBlur, name, value },
+                  fieldState: { error },
+                }) => (
                   <span>
-                    <Form.Item label="Death Date">
+                    <Form.Item label="Death Date" required>
                       <DatePicker
                         {...(value
                           ? {
@@ -462,6 +494,8 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                           : null)}
                         onChange={onChange}
                         onBlur={onBlur}
+                        status={error ? 'error' : ''}
+                        disabled={watch('is_alive')}
                         name={name}
                         size="middle"
                       />
@@ -470,18 +504,34 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 )}
               />
             </Col>
-            <Col span={10}>
+            <Col span={12}>
               <Controller
                 control={control}
                 name="death_cause"
-                render={({ field: { onChange, onBlur, value, name } }) => (
+                render={({
+                  field: { onChange, onBlur, value, name },
+                  fieldState: { error },
+                }) => (
                   <span>
-                    <Form.Item label="Death Cause">
+                    <Form.Item label="Death Cause" required>
                       <Input
                         onChange={onChange}
                         onBlur={onBlur}
                         value={value}
                         name={name}
+                        suffix={
+                          error ? (
+                            <Tooltip title={error?.message} color={'red'}>
+                              <BsFillXCircleFill
+                                className={styles.errorStyle}
+                              />
+                            </Tooltip>
+                          ) : (
+                            ''
+                          )
+                        }
+                        status={error ? 'error' : ''}
+                        disabled={watch('is_alive')}
                         placeholder="We dont know"
                         size="middle"
                       />
@@ -492,7 +542,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
             </Col>
           </Row>
           <Divider className={styles.sectionDevider} />
-          <p className={styles.sectionTitle}>Images</p>
+          <p className={styles.sectionTitle}>Images (3 images max)</p>
           <Row>
             <Col span={20}>
               <Controller
@@ -500,11 +550,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 name="images"
                 render={({ field: { onChange } }) => (
                   <span>
-                    <Dragger
-                      accept=".jpg,.jpeg,.png"
-                      onChange={onChange}
-                      {...props}
-                    >
+                    <Dragger accept=".jpg" onChange={onChange} {...props}>
                       <p className="ant-upload-drag-icon">
                         <InboxOutlined />
                       </p>
@@ -512,7 +558,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         Click or drag image to this area to upload
                       </p>
                       <p className="ant-upload-hint">
-                        Image upload limit is 3 images! Format: .jpg,.jpeg,.png
+                        Image upload limit is 3 images! Format: .jpg
                       </p>
                     </Dragger>
                   </span>

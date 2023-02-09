@@ -24,6 +24,7 @@ export const getAnimals = async (
         Authorization: 'Bearer ' + token,
       },
     });
+    // console.log('animlas in api', response.data);
 
     return response.data;
   } catch (error) {

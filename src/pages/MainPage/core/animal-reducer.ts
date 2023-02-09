@@ -22,7 +22,7 @@ export const animalSlice = createSlice({
       state.animals = [action.payload, ...state.animals];
     },
     getTheAnimals: (state, action: PayloadAction<Animal[]>) => {
-      state.animals = action.payload;
+      state.animals = [...action.payload];
     },
     updateTheAnimal: (state, action: PayloadAction<Animal>) => {
       state.animals = state.animals.map((animal) => {

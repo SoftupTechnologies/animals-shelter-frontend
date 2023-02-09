@@ -143,7 +143,7 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
       key: 'death_date',
     },
     {
-      title: 'Death_Cause',
+      title: 'Death Cause',
       dataIndex: 'death_cause',
       key: 'death_cause',
     },
@@ -174,8 +174,8 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
         death_cause: animal.death_cause ? animal.death_cause : 'No death cause',
         images: animal.images ? (
           <Image.PreviewGroup>
-            {animal.images.map((image) => (
-              <Image width={50} src={image} />
+            {animal.images.map((image, index) => (
+              <Image key={index} width={50} src={image} />
             ))}
           </Image.PreviewGroup>
         ) : (

@@ -11,7 +11,13 @@ export const newDataSchema = yup
     chip_position: yup.string(),
     breed: yup.string().required('Breed is required!'),
     is_alive: yup.boolean(),
-    death_date: yup.string(),
-    death_cause: yup.string(),
+    death_date: yup.string().when('is_alive', {
+      is: false,
+      then: yup.string().required('Death date is required!'),
+    }),
+    death_cause: yup.string().when('is_alive', {
+      is: false,
+      then: yup.string().required('Death cause is required!'),
+    }),
   })
   .required();
