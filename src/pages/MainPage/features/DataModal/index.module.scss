@@ -1,0 +1,80 @@
+.sumbitFormButtonWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+:global {
+  .ant-radio-wrapper .ant-radio-checked .ant-radio-inner {
+    border-color: #7888af;
+    background-color: #687daa;
+  }
+  .ant-switch.ant-switch-checked {
+    background: #7888af;
+  }
+  .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background: #687daa;
+  }
+  .ant-divider-horizontal {
+    margin: 0;
+    min-width: 90%;
+    width: 90%;
+  }
+  .ant-upload-wrapper .ant-upload-drag p.ant-upload-drag-icon .anticon {
+    color: #fe6557;
+  }
+  .ant-upload-wrapper .ant-upload-drag:not(.ant-upload-disabled):hover {
+    border-color: #fe6557;
+  }
+  .ant-upload-wrapper .ant-upload-drag {
+    border: 2px dashed #ff4d4f;
+  }
+  .ant-picker:hover,
+  :where(.css-dev-only-do-not-override-sk7ap8).ant-picker-focused {
+    border-color: #7888af;
+  }
+  .ant-input:hover {
+    border-color: #7888af;
+  }
+  .ant-input-number:hover {
+    border-color: #7888af;
+  }
+  .ant-btn-primary:not(:disabled):hover {
+    background-color: #7888af;
+  }
+}
+.sumbitFormButton {
+  margin-top: 10px;
+  width: 100px;
+  background-color: #687daa;
+  color: white;
+  font-weight: bold;
+  &:hover {
+    background-color: #7888af;
+  }
+}
+.closeFormButton {
+  margin-top: 10px;
+  width: 80px;
+  background-color: #fe6557;
+  color: white;
+  font-weight: bold;
+  &:hover {
+    background-color: #f77e73;
+  }
+}
+.sectionTitle {
+  font-weight: bold;
+  font-size: 15px;
+}
+.errorStyle {
+  color: #fe6557;
+  font-weight: bold;
+  font-size: 12px;
+}
+.errorStyleSpan {
+  position: absolute;
+  color: #fe6557;
+  font-weight: bold;
+  font-size: 12px;
+  bottom: 10;
+}

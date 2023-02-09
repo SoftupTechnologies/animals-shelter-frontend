@@ -1,0 +1,23 @@
+.mainContainer {
+  border-radius: 30px;
+  padding: 30px;
+}
+
+.tableUpperSectionWrapper {
+  display: flex;
+  flex-direction: column;
+  padding-left: 1.7rem;
+  padding-top: 1.6rem;
+  margin-bottom: -1.5rem;
+  :global {
+    .ant-btn {
+      border-radius: 8px;
+      background-color: #687daa;
+      color: white;
+      font-weight: bold;
+      &:hover {
+        background-color: #7888af;
+      }
+    }
+  }
+}
