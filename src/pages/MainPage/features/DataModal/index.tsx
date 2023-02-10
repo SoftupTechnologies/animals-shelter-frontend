@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import { ReactElement, useState } from 'react';
 import { DataPropsType } from './types';
+import day from 'dayjs';
 import styles from './index.module.scss';
 import CustomModal from '../../../../components/common/Modal';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -115,32 +116,28 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
       animalBody.chip_number = values.chip_number;
     }
     if (values.parvo_vaccine) {
-      animalBody.parvo_vaccine = moment(values.parvo_vaccine).format();
+      animalBody.parvo_vaccine = day(values.parvo_vaccine).format();
     }
     if (values.distemper_vaccine) {
-      animalBody.distemper_vaccine = moment(values.distemper_vaccine).format();
+      animalBody.distemper_vaccine = day(values.distemper_vaccine).format();
     }
     if (values.polyvalent_vaccine) {
-      animalBody.polyvalent_vaccine = moment(
-        values.polyvalent_vaccine,
-      ).format();
+      animalBody.polyvalent_vaccine = day(values.polyvalent_vaccine).format();
     }
     if (values.rabies_vaccine) {
-      animalBody.rabies_vaccine = moment(values.rabies_vaccine).format();
+      animalBody.rabies_vaccine = day(values.rabies_vaccine).format();
     }
     if (values.sterilization_date) {
-      animalBody.sterilization_date = moment(
-        values.sterilization_date,
-      ).format();
+      animalBody.sterilization_date = day(values.sterilization_date).format();
     }
     if (values.chip_date) {
-      animalBody.chip_date = moment(values.chip_date).format();
+      animalBody.chip_date = day(values.chip_date).format();
     }
     if (values.chip_position) {
       animalBody.chip_position = values.chip_position;
     }
     if (values.death_date) {
-      animalBody.death_date = moment(values.death_date).format();
+      animalBody.death_date = day(values.death_date).format();
     }
     if (values.death_cause) {
       animalBody.death_cause = values.death_cause;
@@ -150,17 +147,14 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
     }
 
     if (selectedAnimal) {
-      console.log('SelectedValues', values);
-      console.log('SelectedAnimal', selectedAnimal);
-
       const animalToBeUpdated: any = { ...selectedAnimal, ...values };
 
       dispatch(udpateAnAnimal(animalToBeUpdated, selectedAnimal.id));
     } else {
       dispatch(addAnAnimal(animalBody));
     }
-    showDataModal(false);
     reset();
+    showDataModal(false);
     setLoading(false);
   });
 
@@ -498,6 +492,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 )}
               />
             </Col>
+
             <Col span={6}>
               <Controller
                 control={control}

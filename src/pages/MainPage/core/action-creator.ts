@@ -1,3 +1,4 @@
+import day from 'dayjs';
 import { AppDispatch } from '../../../app/store';
 import {
   deleteAnimal,
@@ -62,22 +63,22 @@ export const udpateAnAnimal = (animal: Animal, animalId: number) => {
         animalBody.chip_number = animal.chip_number;
       }
       if (animal.parvo_vaccine) {
-        animalBody.parvo_vaccine = animal.parvo_vaccine;
+        animalBody.parvo_vaccine = day(animal.parvo_vaccine).format();
       }
       if (animal.distemper_vaccine) {
-        animalBody.distemper_vaccine = animal.distemper_vaccine;
+        animalBody.distemper_vaccine = day(animal.distemper_vaccine).format();
       }
       if (animal.polyvalent_vaccine) {
-        animalBody.polyvalent_vaccine = animal.polyvalent_vaccine;
+        animalBody.polyvalent_vaccine = day(animal.polyvalent_vaccine).format();
       }
       if (animal.rabies_vaccine) {
-        animalBody.rabies_vaccine = animal.rabies_vaccine;
+        animalBody.rabies_vaccine = day(animal.rabies_vaccine).format();
       }
       if (animal.sterilization_date) {
-        animalBody.sterilization_date = animal.sterilization_date;
+        animalBody.sterilization_date = day(animal.sterilization_date).format();
       }
       if (animal.chip_date) {
-        animalBody.chip_date = animal.chip_date;
+        animalBody.chip_date = day(animal.chip_date).format();
       }
       if (animal.chip_position) {
         animalBody.chip_position = animal.chip_position;
@@ -100,11 +101,9 @@ export const udpateAnAnimal = (animal: Animal, animalId: number) => {
       if (animal.images) {
         animalBody.images = animal.images;
       }
-      console.log('animalBody', animalBody);
-      console.log('animal', animal);
 
       await updateAnimal(animalBody, animalId);
-      dispatch(updateTheAnimal(animal));
+      dispatch(updateTheAnimal({ ...animal, ...animalBody }));
     } catch (error: any) {
       dispatch(hasError(error.message));
     } finally {
