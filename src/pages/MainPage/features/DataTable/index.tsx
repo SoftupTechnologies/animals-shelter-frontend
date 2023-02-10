@@ -34,7 +34,11 @@ const DataTable = ({ showDataModal }: newDataPropsType): ReactElement => {
         dataSource={primaryData}
         scroll={{ y: 420 }}
         expandable={{
-          expandedRowRender: (record) => expandedRowRender(animals, record),
+          expandedRowRender: (record) => (
+            <span style={{ margin: 0 }}>
+              {expandedRowRender(animals, record)}
+            </span>
+          ),
         }}
         // pagination={{
         //   pageSize,

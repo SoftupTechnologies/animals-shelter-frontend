@@ -64,6 +64,18 @@ export const udpateAnAnimal = (animal: Animal, animalId: number) => {
       if (animal.parvo_vaccine) {
         animalBody.parvo_vaccine = animal.parvo_vaccine;
       }
+      if (animal.distemper_vaccine) {
+        animalBody.distemper_vaccine = animal.distemper_vaccine;
+      }
+      if (animal.polyvalent_vaccine) {
+        animalBody.polyvalent_vaccine = animal.polyvalent_vaccine;
+      }
+      if (animal.rabies_vaccine) {
+        animalBody.rabies_vaccine = animal.rabies_vaccine;
+      }
+      if (animal.sterilization_date) {
+        animalBody.sterilization_date = animal.sterilization_date;
+      }
       if (animal.chip_date) {
         animalBody.chip_date = animal.chip_date;
       }
@@ -88,6 +100,8 @@ export const udpateAnAnimal = (animal: Animal, animalId: number) => {
       if (animal.images) {
         animalBody.images = animal.images;
       }
+      console.log('animalBody', animalBody);
+      console.log('animal', animal);
 
       await updateAnimal(animalBody, animalId);
       dispatch(updateTheAnimal(animal));

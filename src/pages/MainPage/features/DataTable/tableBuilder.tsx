@@ -123,11 +123,6 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
   const columns: TableColumnsType<ExpandedDataType> = [
     { title: 'Chip Number', dataIndex: 'chip_number', key: 'chip_number' },
     {
-      title: 'Parvo Vaccine',
-      dataIndex: 'parvo_vaccine',
-      key: 'parvo_vaccine',
-    },
-    {
       title: 'Chip Date',
       dataIndex: 'chip_date',
       key: 'chip_date',
@@ -136,6 +131,31 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
       title: 'Chip Position',
       dataIndex: 'chip_position',
       key: 'chip_position',
+    },
+    {
+      title: 'Parvo Vaccine',
+      dataIndex: 'parvo_vaccine',
+      key: 'parvo_vaccine',
+    },
+    {
+      title: 'Distemper Vaccine',
+      dataIndex: 'distemper_vaccine',
+      key: 'distemper_vaccine',
+    },
+    {
+      title: 'Polyvalent Vaccine',
+      dataIndex: 'polyvalent_vaccine',
+      key: 'polyvalent_vaccine',
+    },
+    {
+      title: 'Rabies Vaccine',
+      dataIndex: 'rabies_vaccine',
+      key: 'rabies_vaccine',
+    },
+    {
+      title: 'Sterilization Date',
+      dataIndex: 'sterilization_date',
+      key: 'sterilization_date',
     },
     {
       title: 'Death Date',
@@ -160,18 +180,28 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
         key: animal.id,
         chip_number: animal.chip_number ? animal.chip_number : 'No chip number',
         parvo_vaccine: animal.parvo_vaccine
-          ? moment(animal.parvo_vaccine).format('ll')
-          : 'No parvo vaccine',
+          ? moment(animal.parvo_vaccine).format('L')
+          : '----',
+        distemper_vaccine: animal.distemper_vaccine
+          ? moment(animal.distemper_vaccine).format('L')
+          : '----',
+        polyvalent_vaccine: animal.polyvalent_vaccine
+          ? moment(animal.polyvalent_vaccine).format('L')
+          : '----',
+        rabies_vaccine: animal.rabies_vaccine
+          ? moment(animal.rabies_vaccine).format('L')
+          : '----',
+        sterilization_date: animal.sterilization_date
+          ? moment(animal.sterilization_date).format('L')
+          : '----',
         chip_date: animal.chip_date
-          ? moment(animal.chip_date).format('ll')
-          : 'No chip date',
-        chip_position: animal.chip_position
-          ? animal.chip_position
-          : 'No position',
+          ? moment(animal.chip_date).format('L')
+          : '----',
+        chip_position: animal.chip_position ? animal.chip_position : '----',
         death_date: animal.death_date
-          ? moment(animal.death_date).format('ll')
-          : 'No date',
-        death_cause: animal.death_cause ? animal.death_cause : 'No death cause',
+          ? moment(animal.death_date).format('L')
+          : '----',
+        death_cause: animal.death_cause ? animal.death_cause : '----',
         images: animal.images ? (
           <Image.PreviewGroup>
             {animal.images.map((image, index) => (

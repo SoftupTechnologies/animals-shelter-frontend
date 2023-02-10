@@ -14,6 +14,10 @@ export interface ExpandedDataType {
   key: React.Key;
   chip_number: string;
   parvo_vaccine: string;
+  distemper_vaccine: string;
+  polyvalent_vaccine: string;
+  rabies_vaccine: string;
+  sterilization_date: string;
   chip_date: string;
   chip_position: string;
   death_date: string;

@@ -85,6 +85,10 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
       chipped: selectedAnimal?.chipped || false,
       chip_number: selectedAnimal?.chip_number || '',
       parvo_vaccine: selectedAnimal?.parvo_vaccine || '',
+      distemper_vaccine: selectedAnimal?.distemper_vaccine || '',
+      polyvalent_vaccine: selectedAnimal?.polyvalent_vaccine || '',
+      rabies_vaccine: selectedAnimal?.rabies_vaccine || '',
+      sterilization_date: selectedAnimal?.sterilization_date || '',
       chip_date: selectedAnimal?.chip_date || '',
       chip_position: selectedAnimal?.chip_position || '',
       in_shelter: selectedAnimal?.in_shelter || false,
@@ -113,6 +117,22 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
     if (values.parvo_vaccine) {
       animalBody.parvo_vaccine = moment(values.parvo_vaccine).format();
     }
+    if (values.distemper_vaccine) {
+      animalBody.distemper_vaccine = moment(values.distemper_vaccine).format();
+    }
+    if (values.polyvalent_vaccine) {
+      animalBody.polyvalent_vaccine = moment(
+        values.polyvalent_vaccine,
+      ).format();
+    }
+    if (values.rabies_vaccine) {
+      animalBody.rabies_vaccine = moment(values.rabies_vaccine).format();
+    }
+    if (values.sterilization_date) {
+      animalBody.sterilization_date = moment(
+        values.sterilization_date,
+      ).format();
+    }
     if (values.chip_date) {
       animalBody.chip_date = moment(values.chip_date).format();
     }
@@ -130,6 +150,9 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
     }
 
     if (selectedAnimal) {
+      console.log('SelectedValues', values);
+      console.log('SelectedAnimal', selectedAnimal);
+
       const animalToBeUpdated: any = { ...selectedAnimal, ...values };
 
       dispatch(udpateAnAnimal(animalToBeUpdated, selectedAnimal.id));
@@ -242,8 +265,8 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
               />
             </Col>
           </Row>
-          <Row gutter={[16, 16]}>
-            <Col span={4}>
+          <Row gutter={[10, 10]}>
+            <Col span={6}>
               <Controller
                 control={control}
                 name="gender"
@@ -369,7 +392,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
           <Divider className={styles.sectionDevider} />
           <p className={styles.sectionTitle}>Chip Details</p>
           <Row gutter={[16, 16]}>
-            <Col span={5}>
+            <Col span={6}>
               <Controller
                 control={control}
                 name="chip_number"
@@ -398,7 +421,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 )}
               />
             </Col>
-            <Col span={5}>
+            <Col span={8}>
               <Controller
                 control={control}
                 name="chip_position"
@@ -424,7 +447,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 )}
               />
             </Col>
-            <Col span={6}>
+            <Col span={8}>
               <Controller
                 control={control}
                 name="chip_date"
@@ -448,7 +471,10 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 )}
               />
             </Col>
-
+          </Row>
+          <Divider className={styles.sectionDevider} />
+          <p className={styles.sectionTitle}>Vaccine Details</p>
+          <Row gutter={[5, 5]}>
             <Col span={6}>
               <Controller
                 control={control}
@@ -456,6 +482,98 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                 render={({ field: { onChange, onBlur, name, value } }) => (
                   <span>
                     <Form.Item label="Parvo Vaccine">
+                      <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        size="middle"
+                      />
+                    </Form.Item>
+                  </span>
+                )}
+              />
+            </Col>
+            <Col span={6}>
+              <Controller
+                control={control}
+                name="distemper_vaccine"
+                render={({ field: { onChange, onBlur, name, value } }) => (
+                  <span>
+                    <Form.Item label="Distemper Vaccine">
+                      <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        size="middle"
+                      />
+                    </Form.Item>
+                  </span>
+                )}
+              />
+            </Col>
+            <Col span={6}>
+              <Controller
+                control={control}
+                name="polyvalent_vaccine"
+                render={({ field: { onChange, onBlur, name, value } }) => (
+                  <span>
+                    <Form.Item label="Polyvalent Vaccine">
+                      <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        size="middle"
+                      />
+                    </Form.Item>
+                  </span>
+                )}
+              />
+            </Col>
+            <Col span={6}>
+              <Controller
+                control={control}
+                name="rabies_vaccine"
+                render={({ field: { onChange, onBlur, name, value } }) => (
+                  <span>
+                    <Form.Item label="Rabies Vaccine">
+                      <DatePicker
+                        {...(value
+                          ? {
+                              value: dayjs(value),
+                            }
+                          : null)}
+                        onChange={onChange}
+                        onBlur={onBlur}
+                        name={name}
+                        size="middle"
+                      />
+                    </Form.Item>
+                  </span>
+                )}
+              />
+            </Col>
+            <Col span={6}>
+              <Controller
+                control={control}
+                name="sterilization_date"
+                render={({ field: { onChange, onBlur, name, value } }) => (
+                  <span>
+                    <Form.Item label="Sterilization Date">
                       <DatePicker
                         {...(value
                           ? {

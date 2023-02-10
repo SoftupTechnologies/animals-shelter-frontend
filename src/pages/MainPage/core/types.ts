@@ -61,6 +61,10 @@ export type AnimalBody = {
   chipped: boolean;
   chip_number?: string;
   parvo_vaccine?: string;
+  distemper_vaccine?: string;
+  polyvalent_vaccine?: string;
+  rabies_vaccine?: string;
+  sterilization_date?: string;
   chip_date?: string;
   chip_position?: string;
   in_shelter: boolean;
