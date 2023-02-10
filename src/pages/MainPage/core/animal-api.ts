@@ -7,7 +7,7 @@ import {
   UpdateAnimalResponseType,
 } from './types';
 
-const backendUrl = 'http://164.90.213.163:5000';
+const backendUrl = 'https://urchin-app-2liro.ondigitalocean.app/api';
 const token = localStorage.getItem('token');
 
 export const getAnimals = async (
