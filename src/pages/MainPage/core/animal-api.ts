@@ -7,7 +7,7 @@ import {
   UpdateAnimalResponseType,
 } from './types';
 
-const backendUrl = 'http://167.99.252.248:5000';
+const backendUrl = 'http://164.90.213.163:5000';
 const token = localStorage.getItem('token');
 
 export const getAnimals = async (

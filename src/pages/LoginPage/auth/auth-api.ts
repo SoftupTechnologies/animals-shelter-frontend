@@ -3,7 +3,7 @@ import { routes } from '../../../constants/routes';
 
 import { Credentials, LoginType } from './types';
 
-const backendUrl = 'http://167.99.252.248:5000';
+const backendUrl = 'http://164.90.213.163:5000';
 
 export const loginUser = async (
   credentials: Credentials,
