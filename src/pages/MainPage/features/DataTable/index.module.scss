@@ -13,6 +13,10 @@
       background-color: #687daa;
       color: white;
     }
+    .ant-table-row-expand-icon:focus {
+      background-color: #fe6557;
+      color: white;
+    }
     .ant-btn {
       border-radius: 8px;
       background-color: #687daa;
@@ -27,6 +31,39 @@
     }
     .ant-pagination .ant-pagination-item-active a {
       color: #7888af;
+    }
+    input.ant-input.css-dev-only-do-not-override-sk7ap8:hover {
+      border-color: #fe6557;
+    }
+    input.ant-input.css-dev-only-do-not-override-sk7ap8:focus {
+      border-color: #fe6557;
+    }
+    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+      .ant-input-affix-wrapper:hover {
+      border-color: #fe6557;
+    }
+    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+      .ant-input-affix-wrapper-focused {
+      border-color: #fe6557;
+    }
+    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-affix-wrapper {
+      width: 250px;
+    }
+    button.ant-btn.css-dev-only-do-not-override-sk7ap8.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+      color: #ffff;
+    }
+    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+      > .ant-input-group
+      > .ant-input-group-addon:last-child
+      .ant-input-search-button:not(.ant-btn-primary):hover {
+      color: #fe6557;
+      border-color: #fe6557;
+    }
+    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+      > .ant-input-group
+      > .ant-input-group-addon:last-child
+      .ant-input-search-button:not(.ant-btn-primary):focus {
+      border-color: #fe6557;
     }
   }
 

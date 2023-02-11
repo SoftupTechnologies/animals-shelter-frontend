@@ -9,7 +9,7 @@ export const newDataSchema = yup
     parvo_vaccine: yup.string(),
     chip_date: yup.string(),
     chip_position: yup.string(),
-    breed: yup.string().required('Breed is required!'),
+    breed: yup.string().min(2).required('Breed is required!'),
     is_alive: yup.boolean(),
     death_date: yup.string().when('is_alive', {
       is: false,

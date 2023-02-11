@@ -29,7 +29,6 @@ import { AppDispatch, RootState } from '../../../../app/store';
 import { deselectAnimal } from '../../core/animal-reducer';
 import { uploadAnimalImage } from '../../core/animal-api';
 import { addAnAnimal, udpateAnAnimal } from '../../core/action-creator';
-import moment from 'moment';
 import _ from 'lodash';
 import { AnimalBody } from '../../core/types';
 import { BsFillXCircleFill } from 'react-icons/bs';
@@ -199,6 +198,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   <span>
                     <Form.Item label="Breed" required>
                       <Input
+                        allowClear
                         onChange={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -234,6 +234,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                   <span>
                     <Form.Item label="Origin" required>
                       <Input
+                        allowClear
                         onChange={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -400,6 +401,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                       tooltip="If you leave 'Chip Number' field blank, the Chip Number will be auto generated."
                     >
                       <Input
+                        allowClear
                         onChange={onChange}
                         onBlur={onBlur}
                         value={value}
@@ -459,6 +461,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         disabled={!watch('chipped')}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -486,6 +489,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         onBlur={onBlur}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -510,6 +514,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         onBlur={onBlur}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -533,6 +538,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         onBlur={onBlur}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -556,6 +562,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         onBlur={onBlur}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -579,6 +586,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         onBlur={onBlur}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -611,6 +619,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         disabled={watch('is_alive')}
                         name={name}
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>
@@ -647,6 +656,7 @@ const DataModal = ({ showDataModal }: DataPropsType): ReactElement => {
                         disabled={watch('is_alive')}
                         placeholder="We dont know"
                         size="middle"
+                        allowClear
                       />
                     </Form.Item>
                   </span>

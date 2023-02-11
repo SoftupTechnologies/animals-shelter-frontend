@@ -26,32 +26,49 @@ const onEdit = (
   dispatch(selectAnimal(animal));
   showDataModal(true);
 };
-export const columns = [
-  { title: 'Breed', dataIndex: 'breed', key: 'breed' },
-  { title: 'Origin', dataIndex: 'origin', key: 'origin' },
-  { title: 'Gender', dataIndex: 'gender', key: 'gender' },
-  { title: 'Age', dataIndex: 'age', key: 'age' },
-  {
-    title: 'Chipped',
-    dataIndex: 'chipped',
-    key: 'chipped',
-  },
-  {
-    title: 'In Shelter',
-    dataIndex: 'in_shelter',
-    key: 'in_shelter',
-  },
-  {
-    title: 'Is Alive',
-    dataIndex: 'isAlive',
-    key: 'isAlive',
-  },
-  {
-    title: 'Action',
-    dataIndex: 'action',
-    key: 'operation',
-  },
-];
+export const columns = (searchTable: any) => {
+  return [
+    {
+      title: 'Breed',
+      dataIndex: 'breed',
+      key: 'breed',
+      filteredValue: [searchTable],
+      onFilter: (value: any, record: any) => {
+        return (
+          String(record.breed)
+            .toLocaleLowerCase()
+            .includes(value.toLocaleLowerCase()) ||
+          String(record.origin)
+            .toLocaleLowerCase()
+            .includes(value.toLocaleLowerCase())
+        );
+      },
+    },
+    { title: 'Origin', dataIndex: 'origin', key: 'origin' },
+    { title: 'Gender', dataIndex: 'gender', key: 'gender' },
+    { title: 'Age', dataIndex: 'age', key: 'age' },
+    {
+      title: 'Chipped',
+      dataIndex: 'chipped',
+      key: 'chipped',
+    },
+    {
+      title: 'In Shelter',
+      dataIndex: 'in_shelter',
+      key: 'in_shelter',
+    },
+    {
+      title: 'Is Alive',
+      dataIndex: 'isAlive',
+      key: 'isAlive',
+    },
+    {
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'operation',
+    },
+  ];
+};
 
 export const getPrimaryData = (
   animals: Animal[],
@@ -178,7 +195,7 @@ export const expandedRowRender = (animals: Animal[], record: any) => {
     .map((animal) => {
       return {
         key: animal.id,
-        chip_number: animal.chip_number ? animal.chip_number : 'No chip number',
+        chip_number: animal.chip_number ? animal.chip_number : '----',
         parvo_vaccine: animal.parvo_vaccine
           ? moment(animal.parvo_vaccine).format('L')
           : '----',
