@@ -38,28 +38,26 @@
     input.ant-input.css-dev-only-do-not-override-sk7ap8:focus {
       border-color: #fe6557;
     }
-    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
-      .ant-input-affix-wrapper:hover {
+    .ant-input-search .ant-input-affix-wrapper:hover {
       border-color: #fe6557;
     }
-    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
-      .ant-input-affix-wrapper-focused {
+    .ant-input-search .ant-input-affix-wrapper-focused {
       border-color: #fe6557;
     }
-    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-affix-wrapper {
+    .ant-input-affix-wrapper {
       width: 250px;
     }
     button.ant-btn.css-dev-only-do-not-override-sk7ap8.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
       color: #ffff;
     }
-    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+    .ant-input-search
       > .ant-input-group
       > .ant-input-group-addon:last-child
       .ant-input-search-button:not(.ant-btn-primary):hover {
       color: #fe6557;
       border-color: #fe6557;
     }
-    :where(.css-dev-only-do-not-override-sk7ap8).ant-input-search
+    .ant-input-search
       > .ant-input-group
       > .ant-input-group-addon:last-child
       .ant-input-search-button:not(.ant-btn-primary):focus {

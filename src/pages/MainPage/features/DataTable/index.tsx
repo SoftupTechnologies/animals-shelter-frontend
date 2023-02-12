@@ -27,13 +27,17 @@ const DataTable = ({ showDataModal }: newDataPropsType): ReactElement => {
   return (
     <div className={styles.mainPageWrapper}>
       <Space style={{ marginBottom: 15, justifyContent: 'space-between' }}>
-        <Button type="primary" onClick={() => handleOnCreateData()}>
-          <BiAddToQueue />
+        <Button
+          type="primary"
+          icon={<BiAddToQueue />}
+          onClick={() => handleOnCreateData()}
+        >
           Add new data
         </Button>
         <Search
           placeholder="Search with Breed or Origin"
           size="middle"
+          security=""
           allowClear
           loading={false}
           onSearch={(value) => {
