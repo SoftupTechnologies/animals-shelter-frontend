@@ -21,6 +21,32 @@
       }
     }
   }
+
+  .dateStringStyle {
+    margin-right: 0.5rem;
+    margin-top: 15px;
+    font-size: 20px;
+    color: #fe6557;
+  }
+  .line {
+    margin-right: 0.5rem;
+    font-size: 20px;
+    font-weight: bold;
+    background: -webkit-linear-gradient(
+      250deg,
+      rgba(254, 101, 87, 1) 50%,
+      rgba(104, 125, 170, 1) 50%
+    );
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .timeStringStyle {
+    margin-right: 3rem;
+    margin-top: 15px;
+    font-size: 20px;
+    color: #687daa;
+    max-width: 80%;
+  }
 }
 
 .menuHeaderLeft {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'antd';
 import styles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -10,6 +10,14 @@ const AppHeader: React.FC = () => {
     localStorage.removeItem('token');
     navigate(routes.LOG_IN);
   };
+  const [date, setDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setDate(new Date()), 1000);
+    return function cleanup() {
+      clearInterval(timer);
+    };
+  });
   return (
     <div className={styles.menuHeader}>
       <img
@@ -33,6 +41,9 @@ const AppHeader: React.FC = () => {
         >
           Logout
         </Button>
+        <h1 className={styles.timeStringStyle}>{date.toLocaleTimeString()}</h1>
+        <span className={styles.line}>|</span>
+        <h1 className={styles.dateStringStyle}>{date.toLocaleDateString()}</h1>
       </div>
     </div>
   );
